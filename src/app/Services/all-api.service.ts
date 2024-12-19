@@ -9,6 +9,6 @@ export class AllApiService {
   }
 
   api() {
-    return this.http.get('https://countriesnow.space/api/v0.1/countries/codes'); // Replace with actual API
+    return this.http.get('https://countriesnow.space/api/v0.1/countries/codes'); 
   }
 }
