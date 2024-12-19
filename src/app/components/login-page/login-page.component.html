@@ -1,0 +1,169 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg" style="width: 100%; max-width: 500px">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">Sign In</h4>
+
+      <form #signInForm="ngForm" (ngSubmit)="storeUserData()">
+        <div class="col d-flex align-items-center gap-4">
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="form1Example1"
+              >First Name</label
+            >
+            <input
+              mdbInput
+              type="text"
+              id="form1Example1"
+              class="form-control"
+              name="firstName"
+              [(ngModel)]="firstName"
+              required
+              #firstNameCtrl="ngModel"
+            />
+
+            <div
+              class="text-danger small"
+              *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched"
+            >
+              First name is required.
+            </div>
+          </mdb-form-control>
+
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="form1Example2"
+              >Last Name</label
+            >
+            <input
+              mdbInput
+              type="text"
+              id="form1Example2"
+              class="form-control"
+              name="lastName"
+              [(ngModel)]="lastName"
+              required
+              #lastNameCtrl="ngModel"
+            />
+
+            <div
+              class="text-danger small"
+              *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched"
+            >
+              Last name is required.
+            </div>
+          </mdb-form-control>
+        </div>
+
+        <div class="col d-flex align-items-center gap-4 mb-2">
+          <label class="form-label">Gender</label>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              [(ngModel)]="gender"
+              value="male"
+              required
+              #genderCtrl="ngModel"
+            />
+            <label class="form-check-label">Male</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              [(ngModel)]="gender"
+              value="female"
+              required
+            />
+            <label class="form-check-label">Female</label>
+          </div>
+
+          <div
+            class="text-danger small"
+            *ngIf="genderCtrl.invalid && genderCtrl.touched"
+          >
+            Please select a gender.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label" for="country">Country</label>
+          <input
+            type="text"
+            id="country"
+            class="form-control"
+            name="country"
+            [(ngModel)]="selectedCountry"
+            [matAutocomplete]="auto"
+            placeholder="Search country"
+            required
+            #countryCtrl="ngModel"
+            (input)="onCountrySearch($event)"
+          />
+
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="onCountrySelected($event)"
+          >
+            <mat-option
+              *ngFor="let country of filteredCountries"
+              [value]="country.name"
+            >
+              {{ country.name }}
+            </mat-option>
+            <mat-option *ngIf="filteredCountries.length === 0" disabled>
+              No result found
+            </mat-option>
+          </mat-autocomplete>
+
+          <div
+            class="text-danger small"
+            *ngIf="countryCtrl.invalid && countryCtrl.touched"
+          >
+            Country is required.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label" for="phone">Phone Number</label>
+          <div class="input-group">
+            <span class="input-group-text" id="countryCode">{{
+              countryCode
+            }}</span>
+            <input
+              mdbInput
+              type="number"
+              id="phone"
+              class="form-control"
+              name="phone"
+              placeholder="Enter your phone number"
+              [(ngModel)]="phoneNumber"
+              required
+              pattern="\d*"
+              minlength="10"
+              maxlength="10"
+              #phoneCtrl="ngModel"
+            />
+          </div>
+
+          <div
+            class="text-danger small"
+            *ngIf="phoneCtrl.invalid && phoneCtrl.touched"
+          >
+            Phone number is required.
+          </div>
+        </div>
+
+        <button
+          mdbRipple
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="width: 100%"
+          [disabled]="signInForm.invalid"
+        >
+          Sign in
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
